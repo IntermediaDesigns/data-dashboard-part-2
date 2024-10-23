@@ -115,10 +115,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
       {/* Mobile overlay */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-30 lg:hidden"
-          onClick={toggleSidebar}
-        />
+        <div className="fixed inset-0 z-30 lg:hidden" onClick={toggleSidebar} />
       )}
     </>
   );
@@ -206,6 +203,9 @@ const LetterSelector = ({ selectedLetter, onLetterSelect }) => {
 const CharacterModal = ({ character, onClose }) => {
   if (!character) return null;
 
+  // Find the comic URL
+  const comicUrl = character.urls.find((url) => url.type === "comiclink")?.url;
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
       <div className="bg-white p-6 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -220,27 +220,77 @@ const CharacterModal = ({ character, onClose }) => {
           alt={character.name}
           className="w-full h-64 object-cover object-center mb-4"
         />
-        <p className="mb-4">
-          {character.description || "No description available."}
-        </p>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Comics</h3>
-            <p>Available: {character.comics.available}</p>
-            <ul className="list-disc list-inside">
-              {character.comics.items.slice(0, 5).map((comic, index) => (
-                <li key={index}>{comic.name}</li>
-              ))}
-            </ul>
+        <div className="flex justify-between items-center mb-4">
+          <p className="flex-1">
+            {character.description || "No description available."}
+          </p>
+          {comicUrl && (
+            <a
+              href={comicUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-4 px-4 py-2 bg-red-600 text-white font-bold rounded hover:bg-red-700 transition duration-300 flex items-center gap-2"
+            >
+              Comics Page
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </a>
+          )}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gray-50 p-4 rounded">
+            <h3 className="text-xl font-semibold mb-2 text-blue-600">
+              Comics ({character.comics.available})
+            </h3>
+            {character.comics.items.length > 0 ? (
+              <ul className="list-disc list-inside space-y-1">
+                {character.comics.items.slice(0, 5).map((comic, index) => (
+                  <li key={index} className="text-gray-700">
+                    {comic.name}
+                  </li>
+                ))}
+                {character.comics.items.length > 5 && (
+                  <li className="text-gray-500 italic">
+                    And {character.comics.items.length - 5} more...
+                  </li>
+                )}
+              </ul>
+            ) : (
+              <p className="text-gray-500 italic">No comics available</p>
+            )}
           </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Series</h3>
-            <p>Available: {character.series.available}</p>
-            <ul className="list-disc list-inside">
-              {character.series.items.slice(0, 5).map((series, index) => (
-                <li key={index}>{series.name}</li>
-              ))}
-            </ul>
+          <div className="bg-gray-50 p-4 rounded">
+            <h3 className="text-xl font-semibold mb-2 text-pink-600">
+              Series ({character.series.available})
+            </h3>
+            {character.series.items.length > 0 ? (
+              <ul className="list-disc list-inside space-y-1">
+                {character.series.items.slice(0, 5).map((series, index) => (
+                  <li key={index} className="text-gray-700">
+                    {series.name}
+                  </li>
+                ))}
+                {character.series.items.length > 5 && (
+                  <li className="text-gray-500 italic">
+                    And {character.series.items.length - 5} more...
+                  </li>
+                )}
+              </ul>
+            ) : (
+              <p className="text-gray-500 italic">No series available</p>
+            )}
           </div>
         </div>
       </div>
