@@ -2,6 +2,128 @@ import { useState, useEffect } from "react";
 import md5 from "md5";
 import { Link } from "react-router-dom";
 
+const TopNav = () => {
+  return (
+    <nav className="fixed top-0 left-0 right-0 p-4 z-50">
+      <div className="flex items-center justify-between mx-6 flex-wrap">
+        <img src="/dataverselogo.png" alt="logo" className="w-20 sm:w-40" />
+        <h1 className="font-bangers text-4xl md:text-7xl lg:text-9xl text-shadow-xl text-center font-bold text-red-600 tracking-wide">
+          DATAVERSE
+        </h1>
+        <div></div>
+      </div>
+    </nav>
+  );
+};
+
+const Sidebar = ({ isOpen, toggleSidebar }) => {
+  return (
+    <>
+      {/* Hamburger button for mobile */}
+      <button
+        className="fixed top-40 left-4 z-50 lg:hidden bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition-colors"
+        onClick={toggleSidebar}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed h-auto mt-60 w-72 border-4 border-black shadow-lg bg-amber-300 
+          flex flex-col gap-7 items-center py-5 transition-all duration-300 ease-in-out 
+          ${isOpen ? "translate-x-3" : "-translate-x-72"} 
+          left-0 top-0 bottom-0`}
+      >
+        {/* Toggle button for desktop */}
+        <button
+          className="absolute -right-12 top-0 hidden lg:block bg-red-600 text-white p-2 rounded-r-md hover:bg-red-700 transition-colors"
+          onClick={toggleSidebar}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className={`h-6 w-6 transition-transform duration-300 ${
+              isOpen ? "rotate-0" : "rotate-180"
+            }`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
+
+        {/* Sidebar content */}
+        <div className="w-full px-4">
+          <h2 className="text-2xl font-bold text-red-600 mb-6 text-center">
+            Dataverse Menu
+          </h2>
+
+          <div className="flex flex-col gap-4">
+            <Link to="/">
+              <button className="w-full px-6 py-4 bg-red-600 text-white font-bold rounded transition duration-300 ease-in-out hover:shadow-2xl hover:scale-105 hover:bg-red-700">
+                Main Page
+              </button>
+            </Link>
+            <Link to="/about">
+              <button className="w-full px-6 py-4 bg-red-600 text-white font-bold rounded transition duration-300 ease-in-out hover:shadow-2xl hover:scale-105 hover:bg-red-700">
+                About
+              </button>
+            </Link>
+
+            <div className="p-4 border-2 border-black rounded text-center bg-white">
+              <h3 className="font-bold mb-2 text-2xl text-wrap">Quick Stats</h3>
+              <p className="font-bold">
+                Most Comics: <span className="font-normal">Spider-Man</span>
+              </p>
+              <p className="font-bold">
+                Most Series: <span className="font-normal">X-Men</span>
+              </p>
+            </div>
+
+            <div className="p-4 border-2 border-black rounded text-center bg-white">
+              <h3 className="font-bold mb-2 text-2xl text-wrap">
+                Popular Characters
+              </h3>
+              <ul className="space-y-2">
+                <li>Spider-Man</li>
+                <li>Iron Man</li>
+                <li>Captain America</li>
+                <li>Thor</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 lg:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+    </>
+  );
+};
+
 const BackToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -31,7 +153,7 @@ const BackToTopButton = () => {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-5 right-5 bg-red-600 text-white p-3 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-red-700 hover:scale-110"
+          className="fixed right-10 bottom-100 mt-4 bg-red-600 text-white p-3 rounded-full shadow-lg transition duration-300 ease-in-out hover:bg-red-700 hover:scale-110"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +251,7 @@ const CharacterModal = ({ character, onClose }) => {
 const RangeSlider = ({ min, max, value, onChange, label }) => {
   return (
     <div className="flex-1">
-      <label className="block mb-1 font-sans font-bold">{label}</label>
+      <label className="block mb-1 font-sans font-bold text-2xl">{label}</label>
       <div className="flex items-center space-x-2">
         <input
           type="range"
@@ -138,6 +260,7 @@ const RangeSlider = ({ min, max, value, onChange, label }) => {
           value={value[0]}
           onChange={(e) => onChange([parseInt(e.target.value), value[1]])}
           className="w-full"
+          style={{ accentColor: "red" }}
         />
         <input
           type="range"
@@ -146,6 +269,7 @@ const RangeSlider = ({ min, max, value, onChange, label }) => {
           value={value[1]}
           onChange={(e) => onChange([value[0], parseInt(e.target.value)])}
           className="w-full"
+          style={{ accentColor: "red" }}
         />
       </div>
       <div className="flex justify-between">
@@ -166,12 +290,17 @@ const Dashboard = () => {
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   // Updated filters state
   const [filters, setFilters] = useState({
     comics: [0, 100],
     series: [0, 100],
   });
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   const PUBLIC_KEY = import.meta.env.VITE_MARVEL_PUBLIC_KEY;
   const PRIVATE_KEY = import.meta.env.VITE_MARVEL_PRIVATE_KEY;
@@ -275,127 +404,128 @@ const Dashboard = () => {
 
   return (
     <>
-      <nav className="p-4">
-        <div className="flex items-center justify-between mx-6">
-          <img src="/dataverselogo.png" alt="logo" className="w-40" />
-          <h1 className="font-bangers text-9xl text-shadow-xl text-center font-bold text-red-600 tracking-wide">
-            DATAVERSE
+      <TopNav />
+      <div className="flex pt-48">
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <main
+          className={`transition-all duration-300 ease-in-out 
+        ${isSidebarOpen ? "lg:ml-80 ml-0" : "ml-0"} 
+        w-full p-8`}
+        >
+          <h1 className="text-4xl text-center font-bold mt-2 mb-4">
+            Welcome to the Marvel Dataverse Dashboard!
           </h1>
-          <Link to="/">
-            <button className="mt-6 px-6 py-4 bg-red-600 text-white font-bold rounded transition duration-300 ease-in-out hover:shadow-2xl hover:scale-105 hover:bg-red-700">
-              Main Page
-            </button>
-          </Link>
-        </div>
-      </nav>
-      <div className="container mx-auto px-2 py-8">
-        <h1 className="text-4xl text-center font-bold mt-2 mb-4">
-          Welcome to the Marvel Dataverse Dashboard!
-        </h1>
 
-        <LetterSelector
-          selectedLetter={selectedLetter}
-          onLetterSelect={handleLetterSelect}
-        />
-
-        {/* Search bar */}
-        <input
-          type="text"
-          placeholder="Search characters"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 mb-4 text-gray-800 placeholder:text-gray-800 border-black border-4"
-        />
-
-        {/* Filters */}
-        <div className="flex space-x-4 mb-6">
-          <RangeSlider
-            min={0}
-            max={100}
-            value={filters.comics}
-            onChange={(value) => setFilters({ ...filters, comics: value })}
-            label="Comics Range"
+          <LetterSelector
+            selectedLetter={selectedLetter}
+            onLetterSelect={handleLetterSelect}
           />
-          <RangeSlider
-            min={0}
-            max={100}
-            value={filters.series}
-            onChange={(value) => setFilters({ ...filters, series: value })}
-            label="Series Range"
-          />
-        </div>
 
-        {/* Summary statistics */}
-        <div className="bg-lime-300 p-6 mb-8 shadow-lg border-8 border-white">
-          <h2 className="text-2xl font-semibold mb-4">Summary Statistics</h2>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white p-4 shadow-lg border-8 border-black">
-              <p className="text-lg font-semibold">Total Characters</p>
-              <p className="text-3xl text-red-600">{totalCharacters}</p>
+          {/* Search bar */}
+          <input
+            type="text"
+            placeholder="Search characters"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full p-2 mb-4 text-gray-800 placeholder:text-gray-800 border-black border-4"
+          />
+
+          {/* Filters */}
+          <div className="flex items-center justify-center mb-6 flex-wrap sm:flex-nowrap sm:gap-4">
+            <div className="w-full">
+              <RangeSlider
+                min={0}
+                max={100}
+                value={filters.comics}
+                onChange={(value) => setFilters({ ...filters, comics: value })}
+                label="Comics Range"
+              />
             </div>
-            <div className="bg-white p-4 shadow-lg border-8 border-black">
-              <p className="text-lg font-semibold">Avg Comics/Character</p>
-              <p className="text-3xl text-red-600">
-                {averageComics.toFixed(2)}
-              </p>
-            </div>
-            <div className="bg-white p-4 border-8 border-black shadow-lg">
-              <p className="text-lg font-semibold">Max Series</p>
-              <p className="text-3xl text-red-600">{maxSeries}</p>
+            <div className="w-full">
+              <RangeSlider
+                min={0}
+                max={100}
+                value={filters.series}
+                onChange={(value) => setFilters({ ...filters, series: value })}
+                label="Series Range"
+              />
             </div>
           </div>
-        </div>
 
-        {/* Character list */}
-        {loading && displayedCharacters.length === 0 ? (
-          <p className="text-center text-xl">Loading...</p>
-        ) : error ? (
-          <p className="text-center text-xl text-red-600">{error}</p>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {displayedCharacters.map((character) => (
-                <div
-                  key={character.id}
-                  className="bg-white p-6 shadow-md border-8 border-black cursor-pointer transition duration-300 ease-in-out hover:shadow-xl hover:scale-105"
-                  onClick={() => handleCharacterClick(character)}
-                >
-                  <h3 className="text-2xl text-center font-semibold mb-2">
-                    {character.name}
-                  </h3>
-                  <p className="text-xl mb-1">
-                    Comics:{" "}
-                    <span className="text-blue-600">
-                      {character.comics.available}
-                    </span>
-                  </p>
-                  <p className="text-xl">
-                    Series:{" "}
-                    <span className="text-pink-600">
-                      {character.series.available}
-                    </span>
-                  </p>
-                </div>
-              ))}
+          {/* Summary statistics */}
+          <div className="bg-lime-300 p-6 mb-8 shadow-lg border-8 border-white text-center">
+            <h2 className="text-2xl font-semibold mb-4">Summary Statistics</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white p-4 shadow-lg border-8 border-black">
+                <p className="text-lg font-semibold">Total Characters</p>
+                <p className="text-3xl text-red-600">{totalCharacters}</p>
+              </div>
+              <div className="bg-white p-4 shadow-lg border-8 border-black">
+                <p className="text-lg font-semibold text-wrap">
+                  Avg Comics / Character
+                </p>
+                <p className="text-3xl text-red-600">
+                  {averageComics.toFixed(2)}
+                </p>
+              </div>
+              <div className="bg-white p-4 border-8 border-black shadow-lg">
+                <p className="text-lg font-semibold">Max Series</p>
+                <p className="text-3xl text-red-600">{maxSeries}</p>
+              </div>
             </div>
-            {(displayedCharacters.length < characters.length || hasMore) && (
-              <button
-                onClick={loadMore}
-                className="mt-6 px-4 py-2 bg-red-600 text-white font-bold rounded hover:bg-red-700"
-                disabled={loading}
-              >
-                {loading ? "Loading..." : "Load More"}
-              </button>
-            )}
-          </>
-        )}
-        <BackToTopButton />
-        {selectedCharacter && (
-          <CharacterModal
-            character={selectedCharacter}
-            onClose={() => setSelectedCharacter(null)}
-          />
-        )}
+          </div>
+
+          {/* Character list */}
+          {loading && displayedCharacters.length === 0 ? (
+            <p className="text-center text-xl">Loading...</p>
+          ) : error ? (
+            <p className="text-center text-xl text-red-600">{error}</p>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                {displayedCharacters.map((character) => (
+                  <div
+                    key={character.id}
+                    className="bg-white p-6 shadow-md border-8 border-black cursor-pointer transition duration-300 ease-in-out text-center text-wrap hover:shadow-xl hover:scale-105"
+                    onClick={() => handleCharacterClick(character)}
+                  >
+                    <h3 className="text-2xl text-center font-semibold mb-2">
+                      {character.name}
+                    </h3>
+                    <p className="text-xl mb-1">
+                      Comics:{" "}
+                      <span className="text-blue-600">
+                        {character.comics.available}
+                      </span>
+                    </p>
+                    <p className="text-xl">
+                      Series:{" "}
+                      <span className="text-pink-600">
+                        {character.series.available}
+                      </span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+              {(displayedCharacters.length < characters.length || hasMore) && (
+                <button
+                  onClick={loadMore}
+                  className="mt-6 px-4 py-2 bg-red-600 text-white font-bold rounded hover:bg-red-700"
+                  disabled={loading}
+                >
+                  {loading ? "Loading..." : "Load More"}
+                </button>
+              )}
+            </>
+          )}
+          <BackToTopButton />
+          {selectedCharacter && (
+            <CharacterModal
+              character={selectedCharacter}
+              onClose={() => setSelectedCharacter(null)}
+            />
+          )}
+        </main>
       </div>
     </>
   );

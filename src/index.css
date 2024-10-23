@@ -15,9 +15,26 @@ body {
   background-attachment: fixed;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
+  height: 100%;
 }
 
 @font-face {
   font-family: 'Bangers';
   src: url('/font/Bangers.ttf') format('truetype');
+}
+
+/* Add these styles to your CSS */
+@layer components {
+  .sidebar-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .sidebar-button {
+    @apply fixed z-50 bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition-colors;
+  }
+  
+  .sidebar-content {
+    @apply fixed h-auto mt-40 w-72 border-4 border-black shadow-lg bg-amber-300 
+           flex flex-col gap-7 items-center py-5 transition-all duration-300 ease-in-out;
+  }
 }

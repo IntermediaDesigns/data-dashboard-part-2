@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
 const FeatureCard = ({ title, description }) => (
-    <div className="bg-white p-6 rounded-lg shadow-lg border-4 border-red-600 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-105">
-      <h3 className="text-xl font-bold mb-2 text-blue-600">{title}</h3>
-      <p>{description}</p>
-    </div>
-  );
+  <div className="bg-white p-6 rounded-lg shadow-lg border-4 border-red-600 transition duration-300 ease-in-out hover:shadow-2xl hover:scale-105">
+    <h3 className="text-xl font-bold mb-2 text-blue-600">{title}</h3>
+    <p>{description}</p>
+  </div>
+);
 
 const LandingPage = () => {
   const features = [
@@ -78,11 +79,11 @@ const LandingPage = () => {
             ))}
           </div>
           <p className="mb-6 text-center">
-            Whether you&apos;re a longtime Marvel fan or new to the universe, our
-            dashboard provides an engaging way to learn about the vast array of
-            characters in the Marvel universe. Start your journey of discovery
-            now and uncover the heroes, villains, and everyone in between that
-            make the Marvel universe so captivating!
+            Whether you&apos;re a longtime Marvel fan or new to the universe,
+            our dashboard provides an engaging way to learn about the vast array
+            of characters in the Marvel universe. Start your journey of
+            discovery now and uncover the heroes, villains, and everyone in
+            between that make the Marvel universe so captivating!
           </p>
 
           <p className="text-sm italic text-center">
