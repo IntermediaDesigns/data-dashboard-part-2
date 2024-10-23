@@ -138,9 +138,9 @@ const Charts = ({ characters }) => {
 
   return (
     <div className="bg-white p-6 shadow-lg border-8 border-black mb-8">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-center gap-4 items-center mb-6 flex-wrap sm:justify-between">
         <h2 className="text-2xl font-semibold">{charts[activeChart].title}</h2>
-        <div className="flex gap-2">
+        <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
           <button
             onClick={() => setActiveChart("top")}
             className={`px-4 py-2 rounded ${

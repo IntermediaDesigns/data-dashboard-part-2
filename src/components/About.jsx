@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import md5 from 'md5';
-import Charts from './Charts';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import md5 from "md5";
+import Charts from "./Charts";
 
 const About = () => {
   const [characters, setCharacters] = useState([]);
@@ -23,8 +23,8 @@ const About = () => {
         const data = await response.json();
         setCharacters(data.data.results);
         setLoading(false);
-      } catch (err) {
-        setError('Error fetching data');
+      } catch {
+        setError("Error fetching data");
         setLoading(false);
       }
     };
@@ -35,9 +35,9 @@ const About = () => {
   return (
     <>
       <nav className="p-4">
-        <div className="flex items-center justify-between mx-6">
-          <img src="/dataverselogo.png" alt="logo" className="w-40" />
-          <h1 className="font-bangers text-9xl text-shadow-xl text-center font-bold text-red-600 tracking-wide">
+        <div className="flex items-center justify-between mx-6 flex-wrap">
+          <img src="/dataverselogo.png" alt="logo" className="w-20 sm:w-40" />
+          <h1 className="font-bangers text-7xl text-shadow-xl text-center font-bold text-red-600 tracking-wide sm:text-9xl">
             DATAVERSE
           </h1>
           <div className="flex gap-4">
@@ -56,18 +56,22 @@ const About = () => {
       </nav>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-white p-8 rounded-lg shadow-lg border-8 border-black mb-8">
-          <h2 className="text-4xl font-bold text-red-600 mb-6">About Marvel Dataverse</h2>
+        <div className="bg-white p-8 rounded-lg shadow-lg border-8 text-center border-black mb-8">
+          <h2 className="text-4xl font-bold text-red-600 mb-6">
+            About Marvel Dataverse
+          </h2>
           <p className="text-lg mb-4">
-            Marvel Dataverse is an interactive dashboard that allows you to explore and analyze
-            data about Marvel characters. Using the official Marvel API, we provide insights
-            into characters, their comic appearances, and series involvement.
+            Marvel Dataverse is an interactive dashboard that allows you to
+            explore and analyze data about Marvel characters. Using the official
+            Marvel API, we provide insights into characters, their comic
+            appearances, and series involvement.
           </p>
           <p className="text-lg mb-4">
-            The dashboard features various tools to help you discover and understand the vast
-            Marvel universe:
+            The dashboard features various tools to help you discover and
+            understand the vast Marvel universe:
           </p>
-          <ul className="list-disc list-inside mb-6 text-lg">
+
+          <ul className="list-disc list-inside mb-6 text-lg text-left-center">
             <li>Character search and filtering capabilities</li>
             <li>Detailed character information and statistics</li>
             <li>Interactive data visualizations</li>

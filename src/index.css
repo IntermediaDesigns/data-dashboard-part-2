@@ -38,3 +38,10 @@ body {
            flex flex-col gap-7 items-center py-5 transition-all duration-300 ease-in-out;
   }
 }
+
+.text-left-center {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+}
