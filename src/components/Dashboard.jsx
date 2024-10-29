@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import md5 from "md5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TopNav = () => {
   return (
@@ -448,9 +448,11 @@ const Dashboard = () => {
     0
   );
 
-  const handleCharacterClick = (character) => {
-    setSelectedCharacter(character);
-  };
+  const navigate = useNavigate();
+
+const handleCharacterClick = (character) => {
+  navigate(`/character/${character.id}`);
+};
 
   return (
     <>
@@ -569,12 +571,7 @@ const Dashboard = () => {
             </>
           )}
           <BackToTopButton />
-          {selectedCharacter && (
-            <CharacterModal
-              character={selectedCharacter}
-              onClose={() => setSelectedCharacter(null)}
-            />
-          )}
+          
         </main>
       </div>
     </>
