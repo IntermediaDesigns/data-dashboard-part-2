@@ -9,7 +9,7 @@
 }
 
 body {
-  background-image: url("./marvelbg.jpg");
+  background-image: url("/marvelbg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
