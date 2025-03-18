@@ -42,7 +42,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed h-auto mt-60 w-72  border-4 border-black shadow-lg bg-amber-300 
+        className={`fixed h-auto min-h-96 mt-60 w-72  border-4 border-black shadow-lg bg-amber-300 
           flex flex-col gap-7 items-center py-5 transition-all duration-300 ease-in-out 
           ${isOpen ? "translate-x-3" : "-translate-x-72"} 
           left-0 top-0 bottom-0`}
@@ -71,7 +71,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </button>
 
         {/* Sidebar content */}
-        <div className="w-full px-4 mb-40">
+        <div className="w-full px-4">
           <h2 className="text-2xl font-bold text-red-600 mb-6 text-center">
             Dataverse Menu
           </h2>
